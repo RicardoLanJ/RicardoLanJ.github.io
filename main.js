@@ -187,7 +187,7 @@
             var e = $(this).attr("href");
             return top.location.href = e, !1 }), $(".page-number").click(function() { $(top.document).find("." + e).hide() }), $(".archive-article-date").attr("href", "javascript:void(0);");
         else if (!/\/archives\/(.*)/.test(window.location.pathname)) {
-            var t = $('<iframe class="' + e + '"></iframe>').attr("src", "https://ricardolanj.github.io/archives");
+            var t = $('<iframe class="' + e + '"></iframe>').attr("src", "https://ricardolanj.github.io/archives/");
             $(".tools-section-all").append(t), t[0].onload = function() {
                 var e = setInterval(function() {
                     var n = $($(".js-archives-frame")[0].contentWindow.document).find(".archive-inner");
@@ -1877,7 +1877,7 @@
             var e = document.createElement("div");
             if (e.id = "viewer", e.className = "hide", i = document.getElementsByClassName("header-menu")[0], o = document.getElementById("js-tagcloud"), r = document.getElementById("js-aboutme"), a = document.getElementById("js-friends"), s = !!$(".js-archives-frame").length) {
                 var t = $(".js-smart-menu").first().html();
-                $(".header-menu ul").append('<li><a href="httpx://ricardolanj.github.io/archives">' + t + "</a></li>") }
+                $(".header-menu ul").append('<li><a href="https://ricardolanj.github.io/archives">' + t + "</a></li>") }
             var n = '<span class="viewer-title">菜单</span><div class="viewer-div menu" id="js-mobile-menu"></div>',
                 l = o ? '<span class="viewer-title">标签</span><div class="viewer-div tagcloud" id="js-mobile-tagcloud"></div>' : "",
                 u = a ? '<span class="viewer-title">友情链接</span><div class="viewer-div friends" id="js-mobile-friends"></div>' : "",
