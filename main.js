@@ -1877,7 +1877,7 @@
             var e = document.createElement("div");
             if (e.id = "viewer", e.className = "hide", i = document.getElementsByClassName("header-menu")[0], o = document.getElementById("js-tagcloud"), r = document.getElementById("js-aboutme"), a = document.getElementById("js-friends"), s = !!$(".js-archives-frame").length) {
                 var t = $(".js-smart-menu").first().html();
-                $(".header-menu ul").append('<li><a href="/archives">' + t + "</a></li>") }
+                $(".header-menu ul").append('<li><a href="httpx://ricardolanj.github.io/archives">' + t + "</a></li>") }
             var n = '<span class="viewer-title">菜单</span><div class="viewer-div menu" id="js-mobile-menu"></div>',
                 l = o ? '<span class="viewer-title">标签</span><div class="viewer-div tagcloud" id="js-mobile-tagcloud"></div>' : "",
                 u = a ? '<span class="viewer-title">友情链接</span><div class="viewer-div friends" id="js-mobile-friends"></div>' : "",
