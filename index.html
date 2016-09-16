@@ -120,6 +120,59 @@
       <div class="body-wrap">
         
   
+    <article id="post-yilia在https下访问的问题" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/09/16/yilia在https下访问的问题/">yilia在https下访问的问题</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>用hexo server测试时没问题，结果deploy后 文章列表和分享都没了</p>
+<p>原因：<br>    github page 在2016 6.15以后申请的都强制使用https<br>    浏览器会报出混合错误</p>
+<p>分享用的jiathis 好像只有http，我就不指望它了，反正也没啥用</p>
+<p>archives的列表引用是iframe 莫名 /archives 使用了http开头，chrome会，edge不会<br>最后在main.js里找到iframe，把src改为完整url就可以了</p>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2016/09/16/yilia在https下访问的问题/" class="archive-article-date">
+  	<time datetime="2016-09-16T06:43:14.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-09-16</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/yilia-bug/">-yilia -bug</a></li></ul>
+	</div>
+
+      
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+
+
+  
     <article id="post-关于python爬网页中文乱码" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -161,7 +214,7 @@
       
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">-python</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python-bug/">-python -bug</a></li></ul>
 	</div>
 
       
@@ -316,7 +369,7 @@ MathJax.Hub.Queue(function() {
     
     	<section class="tools-section tools-section-tag">
     			<div class="widget tagcloud" id="js-tagcloud">
-    				<a href="/tags/python/" style="font-size: 10px;">-python</a>
+    				<a href="/tags/python-bug/" style="font-size: 10px;">-python -bug</a> <a href="/tags/yilia-bug/" style="font-size: 10px;">-yilia -bug</a>
     			</div>
     	</section>
     
