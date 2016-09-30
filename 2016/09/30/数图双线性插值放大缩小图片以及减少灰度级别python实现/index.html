@@ -4,14 +4,30 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>Archives: 2016/9 | 被你发现啦</title>
+  <title>数图像素级双线性插值放大缩小图片以及减少灰度级别-python实现 | 被你发现啦</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="被你发现啦">
-<meta property="og:url" content="http://yoursite.com/archives/2016/09/index.html">
+  <meta name="description" content="1.双线性插值的方法网上blog都有 
+
+主要就是把新图的像素点的值映射回原图的位置，落在原图的网格中，使用网格的四个顶点带入公式 ：    f(x,y) = f(i+u,j+v) = (1-u)(1-v)f(i,j) + (1-u)vf(i,j+1) + u(1-v)f(i+1,j) + uvf(i+1,j+1)
+
+使用image库读图， numpy转换为二维矩阵，遍历像素点映射到原图套用公式即">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数图像素级双线性插值放大缩小图片以及减少灰度级别-python实现">
+<meta property="og:url" content="http://yoursite.com/2016/09/30/数图双线性插值放大缩小图片以及减少灰度级别python实现/index.html">
 <meta property="og:site_name" content="被你发现啦">
+<meta property="og:description" content="1.双线性插值的方法网上blog都有 
+
+主要就是把新图的像素点的值映射回原图的位置，落在原图的网格中，使用网格的四个顶点带入公式 ：    f(x,y) = f(i+u,j+v) = (1-u)(1-v)f(i,j) + (1-u)vf(i,j+1) + u(1-v)f(i+1,j) + uvf(i+1,j+1)
+
+使用image库读图， numpy转换为二维矩阵，遍历像素点映射到原图套用公式即">
+<meta property="og:updated_time" content="2016-09-30T06:04:06.547Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="被你发现啦">
+<meta name="twitter:title" content="数图像素级双线性插值放大缩小图片以及减少灰度级别-python实现">
+<meta name="twitter:description" content="1.双线性插值的方法网上blog都有 
+
+主要就是把新图的像素点的值映射回原图的位置，落在原图的网格中，使用网格的四个顶点带入公式 ：    f(x,y) = f(i+u,j+v) = (1-u)(1-v)f(i,j) + (1-u)vf(i,j+1) + u(1-v)f(i+1,j) + uvf(i+1,j+1)
+
+使用image库读图， numpy转换为二维矩阵，遍历像素点映射到原图套用公式即">
   
     <link rel="alternative" href="/atom.xml" title="被你发现啦" type="application/atom+xml">
   
@@ -118,145 +134,93 @@
 </nav>
 
       <div class="body-wrap">
+        <article id="post-数图双线性插值放大缩小图片以及减少灰度级别python实现" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
         
   
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/09/30/数图双线性插值放大缩小图片以及减少灰度级别python实现/" class="archive-article-date">
-  	<time datetime="2016-09-30T05:31:19.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-09-30</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/09/30/数图双线性插值放大缩小图片以及减少灰度级别python实现/">数图像素级双线性插值放大缩小图片以及减少灰度级别-python实现</a>
+    <h1 class="article-title" itemprop="name">
+      数图像素级双线性插值放大缩小图片以及减少灰度级别-python实现
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1.双线性插值的方法网上blog都有 </p>
+<blockquote>
+<p>主要就是把新图的像素点的值映射回原图的位置，落在原图的网格中，使用网格的四个顶点带入公式 ：<br>    <em>f(x,y) = f(i+u,j+v) = (1-u)(1-v)f(i,j) + (1-u)vf(i,j+1) + u(1-v)f(i+1,j) + uvf(i+1,j+1)</em></p>
+</blockquote>
+<p>使用image库读图， numpy转换为二维矩阵，遍历像素点映射到原图套用公式即可。</p>
+<p>2.灰度级别减少<br>设转换后级别为level, 则分为level段， 每段长seg = round(256 / (level - 1))<br>以seg为步长算出新图里会存在的灰度值，0，255保留（我定的 = 。=），列表</p>
+<p>遍历像素点，二分左查表里的位置，ex.  0—4—-8 find 3， in 0—4<br>因为 in 3 &lt; 4 - 2 , 3 变成4</p>
+<hr>
+<p>整段代码都放上来好难看(;¬_¬) 放链接<br><a href="https://github.com/RicardoLanJ/implement/blob/master/dip/Quantization.py" target="_blank" rel="external">灰度处理</a><br><a href="https://github.com/RicardoLanJ/implement/blob/master/dip/scale.py" target="_blank" rel="external">大小缩放</a></p>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2016/09/30/数图双线性插值放大缩小图片以及减少灰度级别python实现/" class="archive-article-date">
+  	<time datetime="2016-09-30T05:31:19.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-09-30</time>
+</a>
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags"></i>
 		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数字图像处理/">数字图像处理</a></li></ul>
 	</div>
 
-          
+      
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/09/16/yilia在https下访问的问题/" class="archive-article-date">
-  	<time datetime="2016-09-16T06:43:14.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-09-16</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/09/16/yilia在https下访问的问题/">yilia在https下访问的问题</a>
-    </h1>
-  
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bug/">bug</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/yilia/">yilia</a></li></ul>
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2016/09/16/yilia在https下访问的问题/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">yilia在https下访问的问题</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+	    <a class="jiathis_button_twitter"></a>
+	    <a class="jiathis_button_plus"></a> 
+	    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
 	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
 
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/09/16/关于python爬网页中文乱码/" class="archive-article-date">
-  	<time datetime="2016-09-16T04:05:44.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-09-16</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/09/16/关于python爬网页中文乱码/">关于python保存html后中文乱码</a>
-    </h1>
-  
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bug/">bug</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
-	</div>
 
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/09/04/hello-world/" class="archive-article-date">
-  	<time datetime="2016-09-04T01:39:15.807Z" itemprop="datePublished"><i class="icon-clock"></i>2016-09-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/09/04/hello-world/">Hello World</a>
-    </h1>
-  
 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
 
-    
 
 
       </div>
@@ -279,8 +243,8 @@
 		mathjax: true,
 		animate: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

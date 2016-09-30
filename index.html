@@ -120,6 +120,64 @@
       <div class="body-wrap">
         
   
+    <article id="post-数图双线性插值放大缩小图片以及减少灰度级别python实现" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/09/30/数图双线性插值放大缩小图片以及减少灰度级别python实现/">数图像素级双线性插值放大缩小图片以及减少灰度级别-python实现</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1.双线性插值的方法网上blog都有 </p>
+<blockquote>
+<p>主要就是把新图的像素点的值映射回原图的位置，落在原图的网格中，使用网格的四个顶点带入公式 ：<br>    <em>f(x,y) = f(i+u,j+v) = (1-u)(1-v)f(i,j) + (1-u)vf(i,j+1) + u(1-v)f(i+1,j) + uvf(i+1,j+1)</em></p>
+</blockquote>
+<p>使用image库读图， numpy转换为二维矩阵，遍历像素点映射到原图套用公式即可。</p>
+<p>2.灰度级别减少<br>设转换后级别为level, 则分为level段， 每段长seg = round(256 / (level - 1))<br>以seg为步长算出新图里会存在的灰度值，0，255保留（我定的 = 。=），列表</p>
+<p>遍历像素点，二分左查表里的位置，ex.  0—4—-8 find 3， in 0—4<br>因为 in 3 &lt; 4 - 2 , 3 变成4</p>
+<hr>
+<p>整段代码都放上来好难看(;¬_¬) 放链接<br><a href="https://github.com/RicardoLanJ/implement/blob/master/dip/Quantization.py" target="_blank" rel="external">灰度处理</a><br><a href="https://github.com/RicardoLanJ/implement/blob/master/dip/scale.py" target="_blank" rel="external">大小缩放</a></p>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2016/09/30/数图双线性插值放大缩小图片以及减少灰度级别python实现/" class="archive-article-date">
+  	<time datetime="2016-09-30T05:31:19.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-09-30</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数字图像处理/">数字图像处理</a></li></ul>
+	</div>
+
+      
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+
+
+  
     <article id="post-yilia在https下访问的问题" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -369,7 +427,7 @@ MathJax.Hub.Queue(function() {
     
     	<section class="tools-section tools-section-tag">
     			<div class="widget tagcloud" id="js-tagcloud">
-    				<a href="/tags/bug/" style="font-size: 20px;">bug</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/yilia/" style="font-size: 10px;">yilia</a>
+    				<a href="/tags/bug/" style="font-size: 20px;">bug</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/yilia/" style="font-size: 10px;">yilia</a> <a href="/tags/数字图像处理/" style="font-size: 10px;">数字图像处理</a>
     			</div>
     	</section>
     
