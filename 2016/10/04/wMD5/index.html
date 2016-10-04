@@ -4,14 +4,30 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>Tag: yilia | 被你发现啦</title>
+  <title>MD5 | 被你发现啦</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="被你发现啦">
-<meta property="og:url" content="http://yoursite.com/tags/yilia/index.html">
+  <meta name="description" content="md5的计算过程其他地方都有，这个是官方文档，有几个坑（/TДT)/
+
+补位是“at least one bit and at most 512 bits are appended”， 所以至少要加一个0x80(1000 0000)， 就算你m % 512 = 448,  也要补512 + 64bit。
+
+因为操作刚好是4个字节， 所以实现大都用uint4这种，千万别用int，因为有符号， 相加会">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MD5">
+<meta property="og:url" content="http://yoursite.com/2016/10/04/wMD5/index.html">
 <meta property="og:site_name" content="被你发现啦">
+<meta property="og:description" content="md5的计算过程其他地方都有，这个是官方文档，有几个坑（/TДT)/
+
+补位是“at least one bit and at most 512 bits are appended”， 所以至少要加一个0x80(1000 0000)， 就算你m % 512 = 448,  也要补512 + 64bit。
+
+因为操作刚好是4个字节， 所以实现大都用uint4这种，千万别用int，因为有符号， 相加会">
+<meta property="og:updated_time" content="2016-10-04T03:12:40.414Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="被你发现啦">
+<meta name="twitter:title" content="MD5">
+<meta name="twitter:description" content="md5的计算过程其他地方都有，这个是官方文档，有几个坑（/TДT)/
+
+补位是“at least one bit and at most 512 bits are appended”， 所以至少要加一个0x80(1000 0000)， 就算你m % 512 = 448,  也要补512 + 64bit。
+
+因为操作刚好是4个字节， 所以实现大都用uint4这种，千万别用int，因为有符号， 相加会">
   
     <link rel="alternative" href="/atom.xml" title="被你发现啦" type="application/atom+xml">
   
@@ -118,54 +134,105 @@
 </nav>
 
       <div class="body-wrap">
+        <article id="post-wMD5" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
         
   
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/09/16/yilia在https下访问的问题/" class="archive-article-date">
-  	<time datetime="2016-09-16T06:43:14.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-09-16</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/09/16/yilia在https下访问的问题/">yilia在https下访问的问题</a>
+    <h1 class="article-title" itemprop="name">
+      MD5
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>md5的计算过程其他地方都有，<a href="https://www.ietf.org/rfc/rfc1321.txt" target="_blank" rel="external">这个</a>是官方文档，有几个坑（/TДT)/</p>
+<ol>
+<li><p>补位是“at least one bit and at most 512 bits are appended”， 所以至少要加一个0x80(1000 0000)， 就算你m % 512 = 448,  也要补512 + 64bit。</p>
+</li>
+<li><p>因为操作刚好是4个字节， 所以实现大都用uint4这种，千万别用int，因为有符号， 相加会出现不可描述。小端存储也是要注意的问题。其他blog也提到最后加上的64bit的length，为0xAB， 存储顺序是BA。</p>
+</li>
+<li><p>文档里给的这种公式 a = b + ((a + F(b,c,d) + X[k] + T[i]) &lt;&lt;&lt; s)， 看到&lt;&lt;&lt;是不是以为是左移？ f*cQ,  这是循环左移，移出去的会在右边加回来， 12345678 &lt;&lt;&lt; 2 = 3456712，用(x &lt;&lt; n) | (x &gt;&gt; (32-n))来实现。</p>
+</li>
+<li><p>那个你不知所以的几轮计算，懒得找规律，只好全列出来。不过其实有规律，<a href="https://github.com/linjinjin123/MD5/blob/master/md5.cpp" target="_blank" rel="external">看这里</a> </p>
+</li>
+<li>那个复杂的几轮运算之后是有一轮加法的。</li>
+</ol>
+<p>几个我遇到的bug： （啧啧， 上面提到的都是 ←_←</p>
+<ol>
+<li>一开始发现只有64byte以下正确， 发现是没有至少补1</li>
+<li>然后神tm发现只有512byte以下正确，半天找不出来在哪简直要哭，确信运算没有问题，打印大法发现M[] 错了。我用的是char来读取，变成unsigned时左移，没想到有符号扩展了，应该先 &amp;0xff。</li>
+<li>发现有空格不行， 使用ifstream，会忽略空格。</li>
+<li>发现回车不行 win下\r\n ，所以ifstream要加ios:binary</li>
+</ol>
+<p>附赠debug用在线md5 <a href="http://onlinemd5.com/" target="_blank" rel="external">1</a> <a href="http://www.atool.org/file_hash.php" target="_blank" rel="external">2</a>， 不用怀疑，就是你写错了</p>
+<p><a href="https://github.com/RicardoLanJ/implement/blob/master/cryptology/md5.cpp" target="_blank" rel="external">我的MD5</a> ， 无视打印大法吧</p>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2016/10/04/wMD5/" class="archive-article-date">
+  	<time datetime="2016-10-04T01:52:41.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-10-04</time>
+</a>
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bug/">bug</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/yilia/">yilia</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bug/">bug</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cryptology/">cryptology</a></li></ul>
 	</div>
 
-          
+      
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-  
-    </div></section>
-  
 
-    
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2016/09/30/数图双线性插值放大缩小图片以及减少灰度级别python实现/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">数图像素级双线性插值放大缩小图片以及减少灰度级别-python实现</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+	    <a class="jiathis_button_twitter"></a>
+	    <a class="jiathis_button_plus"></a> 
+	    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+
+
 
 
       </div>
@@ -188,9 +255,9 @@
 		mathjax: true,
 		animate: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		root: "/"

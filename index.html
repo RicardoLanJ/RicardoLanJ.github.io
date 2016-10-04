@@ -120,6 +120,76 @@
       <div class="body-wrap">
         
   
+    <article id="post-wMD5" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/04/wMD5/">MD5</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>md5的计算过程其他地方都有，<a href="https://www.ietf.org/rfc/rfc1321.txt" target="_blank" rel="external">这个</a>是官方文档，有几个坑（/TДT)/</p>
+<ol>
+<li><p>补位是“at least one bit and at most 512 bits are appended”， 所以至少要加一个0x80(1000 0000)， 就算你m % 512 = 448,  也要补512 + 64bit。</p>
+</li>
+<li><p>因为操作刚好是4个字节， 所以实现大都用uint4这种，千万别用int，因为有符号， 相加会出现不可描述。小端存储也是要注意的问题。其他blog也提到最后加上的64bit的length，为0xAB， 存储顺序是BA。</p>
+</li>
+<li><p>文档里给的这种公式 a = b + ((a + F(b,c,d) + X[k] + T[i]) &lt;&lt;&lt; s)， 看到&lt;&lt;&lt;是不是以为是左移？ f*cQ,  这是循环左移，移出去的会在右边加回来， 12345678 &lt;&lt;&lt; 2 = 3456712，用(x &lt;&lt; n) | (x &gt;&gt; (32-n))来实现。</p>
+</li>
+<li><p>那个你不知所以的几轮计算，懒得找规律，只好全列出来。不过其实有规律，<a href="https://github.com/linjinjin123/MD5/blob/master/md5.cpp" target="_blank" rel="external">看这里</a> </p>
+</li>
+<li>那个复杂的几轮运算之后是有一轮加法的。</li>
+</ol>
+<p>几个我遇到的bug： （啧啧， 上面提到的都是 ←_←</p>
+<ol>
+<li>一开始发现只有64byte以下正确， 发现是没有至少补1</li>
+<li>然后神tm发现只有512byte以下正确，半天找不出来在哪简直要哭，确信运算没有问题，打印大法发现M[] 错了。我用的是char来读取，变成unsigned时左移，没想到有符号扩展了，应该先 &amp;0xff。</li>
+<li>发现有空格不行， 使用ifstream，会忽略空格。</li>
+<li>发现回车不行 win下\r\n ，所以ifstream要加ios:binary</li>
+</ol>
+<p>附赠debug用在线md5 <a href="http://onlinemd5.com/" target="_blank" rel="external">1</a> <a href="http://www.atool.org/file_hash.php" target="_blank" rel="external">2</a>， 不用怀疑，就是你写错了</p>
+<p><a href="https://github.com/RicardoLanJ/implement/blob/master/cryptology/md5.cpp" target="_blank" rel="external">我的MD5</a> ， 无视打印大法吧</p>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2016/10/04/wMD5/" class="archive-article-date">
+  	<time datetime="2016-10-04T01:52:41.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-10-04</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bug/">bug</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cryptology/">cryptology</a></li></ul>
+	</div>
+
+      
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+
+
+  
     <article id="post-数图双线性插值放大缩小图片以及减少灰度级别python实现" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -427,7 +497,7 @@ MathJax.Hub.Queue(function() {
     
     	<section class="tools-section tools-section-tag">
     			<div class="widget tagcloud" id="js-tagcloud">
-    				<a href="/tags/bug/" style="font-size: 20px;">bug</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/yilia/" style="font-size: 10px;">yilia</a> <a href="/tags/数字图像处理/" style="font-size: 10px;">数字图像处理</a>
+    				<a href="/tags/bug/" style="font-size: 20px;">bug</a> <a href="/tags/cryptology/" style="font-size: 10px;">cryptology</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/yilia/" style="font-size: 10px;">yilia</a> <a href="/tags/数字图像处理/" style="font-size: 10px;">数字图像处理</a>
     			</div>
     	</section>
     
