@@ -4,14 +4,24 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>Tag: yilia | 被你发现啦</title>
+  <title>haskell的几个练习 | 被你发现啦</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="被你发现啦">
-<meta property="og:url" content="http://yoursite.com/tags/yilia/index.html">
+  <meta name="description" content="其实是总结…
+####1QuickCheck要update cabel才能装
+下面的句子可以执行所有quickcheck{-# LANGUAGE TemplateHaskell #-}return [] – need this for GHC 7.8– quickCheckAll generates test cases for all ‘prop_*’ propertiesmain = $(qu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="haskell的几个练习">
+<meta property="og:url" content="http://yoursite.com/2016/10/24/haskell的几个练习/index.html">
 <meta property="og:site_name" content="被你发现啦">
+<meta property="og:description" content="其实是总结…
+####1QuickCheck要update cabel才能装
+下面的句子可以执行所有quickcheck{-# LANGUAGE TemplateHaskell #-}return [] – need this for GHC 7.8– quickCheckAll generates test cases for all ‘prop_*’ propertiesmain = $(qu">
+<meta property="og:updated_time" content="2016-10-24T03:58:31.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="被你发现啦">
+<meta name="twitter:title" content="haskell的几个练习">
+<meta name="twitter:description" content="其实是总结…
+####1QuickCheck要update cabel才能装
+下面的句子可以执行所有quickcheck{-# LANGUAGE TemplateHaskell #-}return [] – need this for GHC 7.8– quickCheckAll generates test cases for all ‘prop_*’ propertiesmain = $(qu">
   
     <link rel="alternative" href="/atom.xml" title="被你发现啦" type="application/atom+xml">
   
@@ -118,54 +128,115 @@
 </nav>
 
       <div class="body-wrap">
+        <article id="post-haskell的几个练习" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
         
   
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/09/16/yilia在https下访问的问题/" class="archive-article-date">
-  	<time datetime="2016-09-16T06:43:14.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-09-16</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/09/16/yilia在https下访问的问题/">yilia在https下访问的问题</a>
+    <h1 class="article-title" itemprop="name">
+      haskell的几个练习
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>其实是总结…</p>
+<p>####1<br>QuickCheck要update cabel才能装</p>
+<p>下面的句子可以执行所有quickcheck<br>{-# LANGUAGE TemplateHaskell #-}<br>return [] – need this for GHC 7.8<br>– quickCheckAll generates test cases for all ‘prop_*’ properties<br>main = $(quickCheckAll)</p>
+<p>qucikcheck里 ==&gt; 可以用于限制条件</p>
+<p>infix infixl infixr用于设置运算符优先级</p>
+<hr>
+<p>####2<br>haskell里没有循环，都是利用尾递归或者列表生成式，所以在进行迭代时如果次数太多内存会爆炸。尝试过各种方法，都会这样。找了很久发现一个seq函数， 函数原型是a -&gt; b -&gt; b，它的作用是立即计算a然后返回b。这就可以实现循环执行同一个操作，如下的牛顿迭代，可以观察发现内存不会无限增长</p>
+<pre><code>squareroot :: Float -&gt; Float -&gt; Integer -&gt; Float
+squareroot _ x0 0 = x0
+squareroot r x0 n =  x `seq` squareroot r x (n-1)
+    where x = dd r x0
+</code></pre><hr>
+<p>####3<br>haskell 的\$和.运算符区别在于， \$用于去掉括号，在连续的使用函数时，f (g x) = f $ g x，而.更主要的目的是函数的链式调用， 可以把几个函数组合成一个函数，ex：</p>
+<pre><code>func = map (+ 1) . reverse
+func [1,2,3]
+
+map (+ 1) . reverse $ [1,2,3]
+
+map (+ 1) $ reverse  [1,2,3]
+</code></pre><p>他们的效果都一样</p>
+<hr>
+<p>ps： 开启了VX-T之后虚拟机真的快了，之前没开简直爆炸。这台机bios进入很容易。早点就不会装32bit的版本啦靠。怕毛副作用。然而b站html5播放器还是看不了，输入法也不会装。</p>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2016/10/24/haskell的几个练习/" class="archive-article-date">
+  	<time datetime="2016-10-24T03:34:16.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-10-24</time>
+</a>
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bug/">bug</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/yilia/">yilia</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/haskell/">haskell</a></li></ul>
 	</div>
 
-          
+      
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-  
-    </div></section>
-  
 
-    
+  
+<nav id="article-nav">
+  
+    <a href="/2017/03/11/uwp-GoBack/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          [uwp]GoBack() parameter
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/10/23/16-10-23/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">16/10/23</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+	    <a class="jiathis_button_twitter"></a>
+	    <a class="jiathis_button_plus"></a> 
+	    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+
+
 
 
       </div>
@@ -188,9 +259,9 @@
 		mathjax: true,
 		animate: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		root: "/"

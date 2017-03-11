@@ -120,6 +120,210 @@
       <div class="body-wrap">
         
   
+    <article id="post-uwp-GoBack" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/11/uwp-GoBack/">[uwp]GoBack() parameter</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Situation"><a href="#Situation" class="headerlink" title="Situation"></a>Situation</h3><p>uwp 左上角的后退按钮实现通常为</p>
+<pre><code>SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
+            ((Frame)sender).CanGoBack ?
+                AppViewBackButtonVisibility.Visible :
+                AppViewBackButtonVisibility.Collapsed;
+</code></pre><p>和</p>
+<pre><code>Frame rootFrame = Window.Current.Content as Frame;
+       if (rootFrame.CanGoBack)
+       {
+           e.Handled = true;
+           rootFrame.GoBack();
+       }
+</code></pre><hr>
+<p><em>UWP的frame在navigate时是new一个（用cache好像可以保留）， 调用onNavigateTo， page间传递数据依靠navigate传递的参数，问题在goback传了什么。</em></p>
+<h3 id="problem"><a href="#problem" class="headerlink" title="problem"></a>problem</h3><p>ex在mainpage修改后跳转到newpage直接点左上角返回， viewmodel（例）中的数据都丢失了， 因为这是new的typeof（mainpage）, 一个新页面。</p>
+<p>这个问题在回退到自己导航去的页面时没有出现。</p>
+<h3 id=""><a href="#" class="headerlink" title="?"></a>?</h3><p>goback是怎么传参数的， 为什么接下来可以自动传viewmodel</p>
+<h3 id="debug"><a href="#debug" class="headerlink" title="debug"></a>debug</h3><p>断点设置为onnavigate， 发现回到mainpage时e.parameter=””， 和onlaunch中一样。newpage中parameter类型为viewmodel。得出结果goback的参数类型等于navigate来时的参数。所以大概是goback会寻找一个同类型的符合的参数自动传， 大概吧<br>（= 。 =）</p>
+<h3 id="solution"><a href="#solution" class="headerlink" title="solution"></a>solution</h3><p>所以在APP的onlaunch中， 把navigate到mainpage的参数修改为你传递的数据类型。</p>
+<pre><code>    if (e.PrelaunchActivated == false)
+{
+    if (rootFrame.Content == null)
+    {
+        // 当导航堆栈尚未还原时，导航到第一页，
+        // 并通过将所需信息作为导航参数传入来配置
+        // 参数
+        rootFrame.Navigate(typeof(MainPage), new ViewModels.TodoItemViewModel());
+    }
+    // 确保当前窗口处于活动状态
+    Window.Current.Activate();
+}
+</code></pre><p>本来是e.parameter，然而他为“”</p>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2017/03/11/uwp-GoBack/" class="archive-article-date">
+  	<time datetime="2017-03-11T09:14:59.000Z" itemprop="datePublished"><i class="icon-clock"></i>2017-03-11</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/uwp/">uwp</a></li></ul>
+	</div>
+
+      
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-haskell的几个练习" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/24/haskell的几个练习/">haskell的几个练习</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>其实是总结…</p>
+<p>####1<br>QuickCheck要update cabel才能装</p>
+<p>下面的句子可以执行所有quickcheck<br>{-# LANGUAGE TemplateHaskell #-}<br>return [] – need this for GHC 7.8<br>– quickCheckAll generates test cases for all ‘prop_*’ properties<br>main = $(quickCheckAll)</p>
+<p>qucikcheck里 ==&gt; 可以用于限制条件</p>
+<p>infix infixl infixr用于设置运算符优先级</p>
+<hr>
+<p>####2<br>haskell里没有循环，都是利用尾递归或者列表生成式，所以在进行迭代时如果次数太多内存会爆炸。尝试过各种方法，都会这样。找了很久发现一个seq函数， 函数原型是a -&gt; b -&gt; b，它的作用是立即计算a然后返回b。这就可以实现循环执行同一个操作，如下的牛顿迭代，可以观察发现内存不会无限增长</p>
+<pre><code>squareroot :: Float -&gt; Float -&gt; Integer -&gt; Float
+squareroot _ x0 0 = x0
+squareroot r x0 n =  x `seq` squareroot r x (n-1)
+    where x = dd r x0
+</code></pre><hr>
+<p>####3<br>haskell 的\$和.运算符区别在于， \$用于去掉括号，在连续的使用函数时，f (g x) = f $ g x，而.更主要的目的是函数的链式调用， 可以把几个函数组合成一个函数，ex：</p>
+<pre><code>func = map (+ 1) . reverse
+func [1,2,3]
+
+map (+ 1) . reverse $ [1,2,3]
+
+map (+ 1) $ reverse  [1,2,3]
+</code></pre><p>他们的效果都一样</p>
+<hr>
+<p>ps： 开启了VX-T之后虚拟机真的快了，之前没开简直爆炸。这台机bios进入很容易。早点就不会装32bit的版本啦靠。怕毛副作用。然而b站html5播放器还是看不了，输入法也不会装。</p>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2016/10/24/haskell的几个练习/" class="archive-article-date">
+  	<time datetime="2016-10-24T03:34:16.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-10-24</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/haskell/">haskell</a></li></ul>
+	</div>
+
+      
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-16-10-23" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/23/16-10-23/">16/10/23</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>微软的更新为什么都不讲道理，说开始就开始，而且还不限速。</p>
+<p>万圣节活动+s6总决赛+steam不停打游戏，真是颓，同时有各种ddl，各种都没搞，胡适之啊胡适之。</p>
+<p>life is short</p>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2016/10/23/16-10-23/" class="archive-article-date">
+  	<time datetime="2016-10-22T22:53:40.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-10-23</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/随笔/">随笔</a></li></ul>
+	</div>
+
+      
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+
+
+  
     <article id="post-wMD5" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -423,7 +627,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2016 Lan
+    		&copy; 2017 Lan
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -497,7 +701,7 @@ MathJax.Hub.Queue(function() {
     
     	<section class="tools-section tools-section-tag">
     			<div class="widget tagcloud" id="js-tagcloud">
-    				<a href="/tags/bug/" style="font-size: 20px;">bug</a> <a href="/tags/cryptology/" style="font-size: 10px;">cryptology</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/yilia/" style="font-size: 10px;">yilia</a> <a href="/tags/数字图像处理/" style="font-size: 10px;">数字图像处理</a>
+    				<a href="/tags/bug/" style="font-size: 20px;">bug</a> <a href="/tags/cryptology/" style="font-size: 10px;">cryptology</a> <a href="/tags/haskell/" style="font-size: 10px;">haskell</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/uwp/" style="font-size: 10px;">uwp</a> <a href="/tags/yilia/" style="font-size: 10px;">yilia</a> <a href="/tags/数字图像处理/" style="font-size: 10px;">数字图像处理</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
     			</div>
     	</section>
     
