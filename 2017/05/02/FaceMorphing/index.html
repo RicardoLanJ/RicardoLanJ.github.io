@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="uwp," />
+  <meta name="keywords" content="cv," />
 
 
 
@@ -87,17 +87,19 @@
 
 
 
-<meta name="description" content="Situationuwp 左上角的后退按钮实现通常为 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =             ((Frame)sender).CanGoBack ?                 AppViewBackButtonVisibility.Visible :">
-<meta name="keywords" content="uwp">
+<meta name="description" content="Image Morphing主要步骤 选取特征点 计算平均特征点 三角划分平均点 计算仿射矩阵并进仿射变换">
+<meta name="keywords" content="cv">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[uwp]GoBack() parameter">
-<meta property="og:url" content="http://yoursite.com/2017/03/11/uwp-GoBack/index.html">
+<meta property="og:title" content="Face Mesh Morphing">
+<meta property="og:url" content="http://yoursite.com/2017/05/02/FaceMorphing/index.html">
 <meta property="og:site_name" content="被你发现啦">
-<meta property="og:description" content="Situationuwp 左上角的后退按钮实现通常为 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =             ((Frame)sender).CanGoBack ?                 AppViewBackButtonVisibility.Visible :">
-<meta property="og:updated_time" content="2017-03-11T10:04:10.391Z">
+<meta property="og:description" content="Image Morphing主要步骤 选取特征点 计算平均特征点 三角划分平均点 计算仿射矩阵并进仿射变换">
+<meta property="og:image" content="http://yoursite.com/2017/05/02/FaceMorphing/三角剖分.PNG">
+<meta property="og:updated_time" content="2017-05-15T14:37:40.009Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="[uwp]GoBack() parameter">
-<meta name="twitter:description" content="Situationuwp 左上角的后退按钮实现通常为 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =             ((Frame)sender).CanGoBack ?                 AppViewBackButtonVisibility.Visible :">
+<meta name="twitter:title" content="Face Mesh Morphing">
+<meta name="twitter:description" content="Image Morphing主要步骤 选取特征点 计算平均特征点 三角划分平均点 计算仿射矩阵并进仿射变换">
+<meta name="twitter:image" content="http://yoursite.com/2017/05/02/FaceMorphing/三角剖分.PNG">
 
 
 
@@ -125,13 +127,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/03/11/uwp-GoBack/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/05/02/FaceMorphing/"/>
 
 
 
 
 
-  <title> [uwp]GoBack() parameter | 被你发现啦 </title>
+  <title> Face Mesh Morphing | 被你发现啦 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -250,7 +252,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/11/uwp-GoBack/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/02/FaceMorphing/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Lan">
@@ -271,7 +273,7 @@
             
             
               
-                [uwp]GoBack() parameter
+                Face Mesh Morphing
               
             
           </h1>
@@ -286,8 +288,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-11T17:14:59+08:00">
-                2017-03-11
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-02T11:13:36+08:00">
+                2017-05-02
               </time>
             
 
@@ -322,38 +324,22 @@
       
 
       
-        <h3 id="Situation"><a href="#Situation" class="headerlink" title="Situation"></a>Situation</h3><p>uwp 左上角的后退按钮实现通常为</p>
-<pre><code>SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
-            ((Frame)sender).CanGoBack ?
-                AppViewBackButtonVisibility.Visible :
-                AppViewBackButtonVisibility.Collapsed;
-</code></pre><p>和</p>
-<pre><code>Frame rootFrame = Window.Current.Content as Frame;
-       if (rootFrame.CanGoBack)
-       {
-           e.Handled = true;
-           rootFrame.GoBack();
-       }
-</code></pre><hr>
-<p><em>UWP的frame在navigate时是new一个（用cache好像可以保留）， 调用onNavigateTo， page间传递数据依靠navigate传递的参数，问题在goback传了什么。</em></p>
-<h3 id="problem"><a href="#problem" class="headerlink" title="problem"></a>problem</h3><p>ex在mainpage修改后跳转到newpage直接点左上角返回， viewmodel（例）中的数据都丢失了， 因为这是new的typeof（mainpage）, 一个新页面。</p>
-<p>这个问题在回退到自己导航去的页面时没有出现。</p>
-<h3 id=""><a href="#" class="headerlink" title="?"></a>?</h3><p>goback是怎么传参数的， 为什么接下来可以自动传viewmodel</p>
-<h3 id="debug"><a href="#debug" class="headerlink" title="debug"></a>debug</h3><p>断点设置为onnavigate， 发现回到mainpage时e.parameter=””， 和onlaunch中一样。newpage中parameter类型为viewmodel。得出结果goback的参数类型等于navigate来时的参数。所以大概是goback会寻找一个同类型的符合的参数自动传， 大概吧<br>（= 。 =）</p>
-<h3 id="solution"><a href="#solution" class="headerlink" title="solution"></a>solution</h3><p>所以在APP的onlaunch中， 把navigate到mainpage的参数修改为你传递的数据类型。</p>
-<pre><code>    if (e.PrelaunchActivated == false)
-{
-    if (rootFrame.Content == null)
-    {
-        // 当导航堆栈尚未还原时，导航到第一页，
-        // 并通过将所需信息作为导航参数传入来配置
-        // 参数
-        rootFrame.Navigate(typeof(MainPage), new ViewModels.TodoItemViewModel());
-    }
-    // 确保当前窗口处于活动状态
-    Window.Current.Activate();
-}
-</code></pre><p>本来是e.parameter，然而他为“”</p>
+        <h1 id="Image-Morphing"><a href="#Image-Morphing" class="headerlink" title="Image Morphing"></a>Image Morphing</h1><h2 id="主要步骤"><a href="#主要步骤" class="headerlink" title="主要步骤"></a>主要步骤</h2><ol>
+<li><a href="#选取特征点">选取特征点</a></li>
+<li><a href="#计算平均特征点">计算平均特征点</a></li>
+<li><a href="#三角划分平均点">三角划分平均点</a></li>
+<li><a href="#计算仿射矩阵并进仿射变换">计算仿射矩阵并进仿射变换</a><a id="more"></a>
+<h4 id="选取特征点"><a href="#选取特征点" class="headerlink" title="选取特征点"></a>选取特征点</h4></li>
+</ol>
+<ul>
+<li>我使用的是手动选取</li>
+<li>在选取特征点的时候除了要把各种轮廓都勾出来外，要注意比如一片嘴唇上下都要标记，因为嘴巴可能是张开和闭合的</li>
+<li>作业的两幅图简直是极端不同嘴巴开闭，皱纹，发型…<img src="/2017/05/02/FaceMorphing/三角剖分.PNG" alt="三角剖分" title="三角剖分">
+</li>
+</ul>
+<h4 id="计算平均特征点"><a href="#计算平均特征点" class="headerlink" title="计算平均特征点"></a>计算平均特征点</h4><p>直接取按比例即可，p <em> a + (1-p) </em> b (像素混合时也是)</p>
+<h4 id="三角划分平均点"><a href="#三角划分平均点" class="headerlink" title="三角划分平均点"></a>三角划分平均点</h4><p>使用delaunay-triangulation算法<br>使用的是github上的实现，（里面顺便实现的三角形class很方便，<br><a href="https://github.com/Bl4ckb0ne/delaunay-triangulation" target="_blank" rel="external">链接</a></p>
+<h4 id="计算仿射矩阵并进仿射变换"><a href="#计算仿射矩阵并进仿射变换" class="headerlink" title="计算仿射矩阵并进仿射变换"></a>计算仿射矩阵并进仿射变换</h4><p>之前看的文章都对两幅原图做了三角剖分，以为是把两边的对应三角投影到平均点划分的三角，<br>然后按比例混合，结果图像非常鬼畜（可能是三角形没匹配对。<br>实际上不需要匹配三角形，只要记录平均点由哪个点平均而来，对于每个目标图上的三角形，<br>都可以找到对应原图上的三个点，就可以计算仿射矩阵，好写很多。  </p>
 
       
     </div>
@@ -383,7 +369,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/uwp/" rel="tag"># uwp</a>
+            <a href="/tags/cv/" rel="tag"># cv</a>
           
         </div>
       
@@ -396,18 +382,14 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/03/14/1/" rel="next" title="CImg的直方图均衡化">
-                <i class="fa fa-chevron-left"></i> CImg的直方图均衡化
-              </a>
-            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/10/24/haskell的几个练习/" rel="prev" title="haskell的几个练习">
-                haskell的几个练习 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/04/25/cocos2d不使用py3-5做作业/" rel="prev" title="cocos2d不使用py3.5做作业">
+                cocos2d不使用py3.5做作业 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -545,7 +527,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Situation"><span class="nav-number">1.</span> <span class="nav-text">Situation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#problem"><span class="nav-number">2.</span> <span class="nav-text">problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#"><span class="nav-number">3.</span> <span class="nav-text">?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#debug"><span class="nav-number">4.</span> <span class="nav-text">debug</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution"><span class="nav-number">5.</span> <span class="nav-text">solution</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Image-Morphing"><span class="nav-number">1.</span> <span class="nav-text">Image Morphing</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#主要步骤"><span class="nav-number">1.1.</span> <span class="nav-text">主要步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#选取特征点"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">选取特征点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#计算平均特征点"><span class="nav-number">1.1.0.2.</span> <span class="nav-text">计算平均特征点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三角划分平均点"><span class="nav-number">1.1.0.3.</span> <span class="nav-text">三角划分平均点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#计算仿射矩阵并进仿射变换"><span class="nav-number">1.1.0.4.</span> <span class="nav-text">计算仿射矩阵并进仿射变换</span></a></li></ol></li></ol></li></ol></li></ol></div>
             
 
           </div>
