@@ -250,6 +250,399 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/10/23/16-10-23/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/assert/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="被你发现啦">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/10/23/16-10-23/" itemprop="url">
+                  16/10/23
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-10-23T06:53:40+08:00">
+                2016-10-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>微软的更新为什么都不讲道理，说开始就开始，而且还不限速。</p>
+<p>万圣节活动+s6总决赛+steam不停打游戏，真是颓，同时有各种ddl，各种都没搞，胡适之啊胡适之。</p>
+<p>life is short</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/10/04/wMD5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/assert/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="被你发现啦">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/10/04/wMD5/" itemprop="url">
+                  MD5
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-10-04T09:52:41+08:00">
+                2016-10-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>md5的计算过程其他地方都有，<a href="https://www.ietf.org/rfc/rfc1321.txt" target="_blank" rel="external">这个</a>是官方文档，有几个坑（/TДT)/</p>
+<ol>
+<li><p>补位是“at least one bit and at most 512 bits are appended”， 所以至少要加一个0x80(1000 0000)， 就算你m % 512 = 448,  也要补512 + 64bit。</p>
+</li>
+<li><p>因为操作刚好是4个字节， 所以实现大都用uint4这种，千万别用int，因为有符号， 相加会出现不可描述。小端存储也是要注意的问题。其他blog也提到最后加上的64bit的length，为0xAB， 存储顺序是BA。</p>
+</li>
+<li><p>文档里给的这种公式 a = b + ((a + F(b,c,d) + X[k] + T[i]) &lt;&lt;&lt; s)， 看到&lt;&lt;&lt;是不是以为是左移？ f*cQ,  这是循环左移，移出去的会在右边加回来， 12345678 &lt;&lt;&lt; 2 = 3456712，用(x &lt;&lt; n) | (x &gt;&gt; (32-n))来实现。</p>
+</li>
+<li><p>那个你不知所以的几轮计算，懒得找规律，只好全列出来。不过其实有规律，<a href="https://github.com/linjinjin123/MD5/blob/master/md5.cpp" target="_blank" rel="external">看这里</a> </p>
+</li>
+<li>那个复杂的几轮运算之后是有一轮加法的。</li>
+</ol>
+<p>几个我遇到的bug： （啧啧， 上面提到的都是 ←_←</p>
+<ol>
+<li>一开始发现只有64byte以下正确， 发现是没有至少补1</li>
+<li>然后神tm发现只有512byte以下正确，半天找不出来在哪简直要哭，确信运算没有问题，打印大法发现M[] 错了。我用的是char来读取，变成unsigned时左移，没想到有符号扩展了，应该先 &amp;0xff。</li>
+<li>发现有空格不行， 使用ifstream，会忽略空格。</li>
+<li>发现回车不行 win下\r\n ，所以ifstream要加ios:binary</li>
+</ol>
+<p>附赠debug用在线md5 <a href="http://onlinemd5.com/" target="_blank" rel="external">1</a> <a href="http://www.atool.org/file_hash.php" target="_blank" rel="external">2</a>， 不用怀疑，就是你写错了</p>
+<p><a href="https://github.com/RicardoLanJ/implement/blob/master/cryptology/md5.cpp" target="_blank" rel="external">我的MD5</a> ， 无视打印大法吧</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/30/数图双线性插值放大缩小图片以及减少灰度级别python实现/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/assert/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="被你发现啦">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/09/30/数图双线性插值放大缩小图片以及减少灰度级别python实现/" itemprop="url">
+                  数图像素级双线性插值放大缩小图片以及减少灰度级别-python实现
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-09-30T13:31:19+08:00">
+                2016-09-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>1.双线性插值的方法网上blog都有 </p>
+<blockquote>
+<p>主要就是把新图的像素点的值映射回原图的位置，落在原图的网格中，使用网格的四个顶点带入公式 ：<br>    <em>f(x,y) = f(i+u,j+v) = (1-u)(1-v)f(i,j) + (1-u)vf(i,j+1) + u(1-v)f(i+1,j) + uvf(i+1,j+1)</em></p>
+</blockquote>
+<p>使用image库读图， numpy转换为二维矩阵，遍历像素点映射到原图套用公式即可。</p>
+<p>2.灰度级别减少<br>设转换后级别为level, 则分为level段， 每段长seg = round(256 / (level - 1))<br>以seg为步长算出新图里会存在的灰度值，0，255保留（我定的 = 。=），列表</p>
+<p>遍历像素点，二分左查表里的位置，ex.  0—4—-8 find 3， in 0—4<br>因为 in 3 &lt; 4 - 2 , 3 变成4</p>
+<hr>
+<p>整段代码都放上来好难看(;¬_¬) 放链接<br><a href="https://github.com/RicardoLanJ/implement/blob/master/dip/Quantization.py" target="_blank" rel="external">灰度处理</a><br><a href="https://github.com/RicardoLanJ/implement/blob/master/dip/scale.py" target="_blank" rel="external">大小缩放</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/16/yilia在https下访问的问题/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -675,7 +1068,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">16</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -688,7 +1081,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -747,7 +1140,7 @@
         <div class="copyright" >
   
   &copy;  2016 - 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
