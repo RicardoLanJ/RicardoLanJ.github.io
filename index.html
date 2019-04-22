@@ -250,6 +250,131 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/22/pytorch1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/assert/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="被你发现啦">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2019/04/22/pytorch1/" itemprop="url">
+                  pytorch1-官方教程CLASSIFIER
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-22T22:01:19+08:00">
+                2019-04-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>对于教程中问题的笔记<br><a href="https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html#sphx-glr-beginner-blitz-cifar10-tutorial-py">教程地址</a></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/04/22/pytorch1/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/19/gta/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1406,148 +1531,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/10/24/haskell的几个练习/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lan">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/assert/head.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="被你发现啦">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/10/24/haskell的几个练习/" itemprop="url">
-                  haskell的几个练习
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-10-24T11:34:16+08:00">
-                2016-10-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>其实是总结…</p>
-<p>####1<br>QuickCheck要update cabel才能装</p>
-<p>下面的句子可以执行所有quickcheck<br>{-# LANGUAGE TemplateHaskell #-}<br>return [] – need this for GHC 7.8<br>– quickCheckAll generates test cases for all ‘prop_*’ properties<br>main = $(quickCheckAll)</p>
-<p>qucikcheck里 ==&gt; 可以用于限制条件</p>
-<p>infix infixl infixr用于设置运算符优先级</p>
-<hr>
-<p>####2<br>haskell里没有循环，都是利用尾递归或者列表生成式，所以在进行迭代时如果次数太多内存会爆炸。尝试过各种方法，都会这样。找了很久发现一个seq函数， 函数原型是a -&gt; b -&gt; b，它的作用是立即计算a然后返回b。这就可以实现循环执行同一个操作，如下的牛顿迭代，可以观察发现内存不会无限增长</p>
-<pre><code>squareroot :: Float -&gt; Float -&gt; Integer -&gt; Float
-squareroot _ x0 0 = x0
-squareroot r x0 n =  x `seq` squareroot r x (n-1)
-    where x = dd r x0
-</code></pre><hr>
-<p>####3<br>haskell 的\$和.运算符区别在于， \$用于去掉括号，在连续的使用函数时，f (g x) = f $ g x，而.更主要的目的是函数的链式调用， 可以把几个函数组合成一个函数，ex：</p>
-<pre><code>func = map (+ 1) . reverse
-func [1,2,3]
-
-map (+ 1) . reverse $ [1,2,3]
-
-map (+ 1) $ reverse  [1,2,3]
-</code></pre><p>他们的效果都一样</p>
-<hr>
-<p>ps： 开启了VX-T之后虚拟机真的快了，之前没开简直爆炸。这台机bios进入很容易。早点就不会装32bit的版本啦靠。怕毛副作用。然而b站html5播放器还是看不了，输入法也不会装。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1597,7 +1580,7 @@ map (+ 1) $ reverse  [1,2,3]
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">17</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1610,7 +1593,7 @@ map (+ 1) $ reverse  [1,2,3]
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">16</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

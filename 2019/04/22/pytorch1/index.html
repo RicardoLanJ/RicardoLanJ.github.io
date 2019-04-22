@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="pytorch," />
 
 
 
@@ -87,15 +87,17 @@
 
 
 
-<meta name="description" content="吴盐胜雪 纤手破新橙">
-<meta property="og:type" content="website">
-<meta property="og:title" content="被你发现啦">
-<meta property="og:url" content="http://yoursite.com/tags/cryptology/index.html">
+<meta name="description" content="对于教程中问题的笔记教程地址">
+<meta name="keywords" content="pytorch">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pytorch1-官方教程CLASSIFIER">
+<meta property="og:url" content="http://yoursite.com/2019/04/22/pytorch1/index.html">
 <meta property="og:site_name" content="被你发现啦">
-<meta property="og:description" content="吴盐胜雪 纤手破新橙">
+<meta property="og:description" content="对于教程中问题的笔记教程地址">
+<meta property="og:updated_time" content="2019-04-22T14:47:06.309Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="被你发现啦">
-<meta name="twitter:description" content="吴盐胜雪 纤手破新橙">
+<meta name="twitter:title" content="pytorch1-官方教程CLASSIFIER">
+<meta name="twitter:description" content="对于教程中问题的笔记教程地址">
 
 
 
@@ -123,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/cryptology/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/04/22/pytorch1/"/>
 
 
 
 
 
-  <title> 标签: cryptology | 被你发现啦 </title>
+  <title> pytorch1-官方教程CLASSIFIER | 被你发现啦 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -154,7 +156,7 @@
     
   
 
-  <div class="container sidebar-position-left  ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -238,46 +240,168 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-collapse">
-    <div class="collection-title">
-      <h2 >
-        cryptology
-        <small>标签</small>
-      </h2>
-    </div>
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/22/pytorch1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/assert/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="被你发现啦">
+    </span>
 
     
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                pytorch1-官方教程CLASSIFIER
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-22T22:01:19+08:00">
+                2019-04-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
       
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+      
+        <p>对于教程中问题的笔记<br><a href="https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html#sphx-glr-beginner-blitz-cifar10-tutorial-py" target="_blank" rel="external">教程地址</a></p>
+<a id="more"></a>
+<h3 id="transforms-Normalize"><a href="#transforms-Normalize" class="headerlink" title="transforms.Normalize"></a>transforms.Normalize</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">transforms.Normalize((<span class="number">0.5</span>, <span class="number">0.5</span>, <span class="number">0.5</span>), (<span class="number">0.5</span>, <span class="number">0.5</span>, <span class="number">0.5</span>))</div></pre></td></tr></table></figure>
+<p>transforms.Compose将多个操作组成序列，其中有一项Normalize，在pytorch中Normalize函数接收mean和std，实际上是z-score standardization</p>
+<pre><code>z=(x-mean(x))/std(x)
+</code></pre><h4 id="standardization-amp-normalization"><a href="#standardization-amp-normalization" class="headerlink" title="standardization &amp; normalization"></a>standardization &amp; normalization</h4><p><a href="https://zhuanlan.zhihu.com/p/29957294" target="_blank" rel="external">知乎上的详细说明</a><br>总而言之是翻译的问题。</p>
+<h4 id="why-mean-0-5，std-0-5"><a href="#why-mean-0-5，std-0-5" class="headerlink" title="why mean = 0.5，std = 0.5"></a>why mean = 0.5，std = 0.5</h4><p>为tuple是因为有rgb通量都要参数。<br>当x属于[0, 1], mean=0.5，std=0.5，根据z-score公式x范围将变成[-1, 1]。</p>
+<h3 id="unnormalize"><a href="#unnormalize" class="headerlink" title="unnormalize"></a>unnormalize</h3><p>在例子里有一段<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">imshow</span><span class="params">(img)</span>:</span></div><div class="line">    img = img / <span class="number">2</span> + <span class="number">0.5</span>     <span class="comment"># unnormalize</span></div></pre></td></tr></table></figure></p>
+<p>这一步让我困惑了很久，虽然可以推导出是因为x属于[-1, 1]，而这一步让x回到[0, 1]的范围用于plt的show。问题在于为什么注释写了unnormailze，如果你看完上面一段应该可以知道这是与z-score stadardization<del>normalization</del>相对而言的。</p>
+<p>这个问题搜了好久才在霓虹友人的blog里找到 <a href="https://qiita.com/kazetof/items/6a72926b9f8cd44c218e#36-unnormalize%E3%81%A8%E3%81%AF" target="_blank" rel="external">链接</a></p>
+<blockquote>
+<p>img = img / 2 + 0.5の部分にコメントでunnormalizeとありますが，これをunnormalizeというのは若干ミスリードな気がします．normalizeされているといえばされていますし．<br>plt.imshowの入力が[0,1]なので，それに合わせてずらしています．</p>
+</blockquote>
 
-      <h1 class="post-title">
+      
+    </div>
+
+    <div>
+      
         
-            <a class="post-title-link" href="/2016/10/04/wMD5/" itemprop="url">
-              
-                <span itemprop="name">MD5</span>
-              
-            </a>
+
+      
+    </div>
+
+    <div>
+      
         
-      </h1>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2016-10-04T09:52:41+08:00"
-              content="2016-10-04" >
-          10-04
-        </time>
-      </div>
+      
+    </div>
 
-    </header>
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/pytorch/" rel="tag"># pytorch</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/19/gta/" rel="prev" title="如何连上gtaol">
+                如何连上gtaol <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </article>
 
 
-    
-  </div>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -285,6 +409,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -304,8 +432,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/assert/head.jpg"
@@ -375,6 +512,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#transforms-Normalize"><span class="nav-number">1.</span> <span class="nav-text">transforms.Normalize</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#standardization-amp-normalization"><span class="nav-number">1.1.</span> <span class="nav-text">standardization & normalization</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#why-mean-0-5，std-0-5"><span class="nav-number">1.2.</span> <span class="nav-text">why mean = 0.5，std = 0.5</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#unnormalize"><span class="nav-number">2.</span> <span class="nav-text">unnormalize</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -493,6 +646,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
 
   
 
